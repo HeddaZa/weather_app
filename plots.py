@@ -1,15 +1,14 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-import plotly.express as px
-import pandas as pd
 
 
-
-def subplots(reset, start_date = None, end_date = None):
-    # if start_date and end_date:
-    #     reset = filter_for_date(reset, start_date=start_date, end_date=end_date)
-
-
+def subplots(reset):
+    ''' 
+    plots three subplots: 
+    - temperature (mean temperature, min temperature, max temperature)
+    - precipitation
+    - wind (mean velocity, max velocity)
+    '''
     fig = make_subplots(rows=3, cols=1, shared_xaxes=True)
 
     fig.add_trace(
@@ -75,51 +74,4 @@ def subplots(reset, start_date = None, end_date = None):
         xaxis_showticklabels=True, 
         xaxis2_showticklabels=True
         )
-    return fig
-
-def period_index(df, period):
-    df = df.reset_index(drop = False)
-    df['date'] = pd.to_datetime(df['date'])
-    if period == 'year':
-        df['period'] = df['date'].dt.year
-        df['period_xaxis'] = df['date'].apply(lambda x: x.replace(year = 2000))
-    elif period == 'month':
-        df['period'] = df['date'].dt.month
-        df['period_xaxis'] = df['date'].dt.day
-    elif period == 'week':
-        df['period'] = df['date'].dt.isocalendar().week
-        df['period_xaxis'] = df['date'].dt.day_name()
-    else:
-        raise ValueError('Wrong period format')
-    return df.set_index(['period','date'])
-
-def plot_period(df, period = 'week'):
-    df = period_index(df, period = period)
-    fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
-    for index in df.index.levels[0]:
-        period_data = df.loc[index]
-        fig.add_trace(
-            go.Scatter(x = period_data['period_xaxis'],y=period_data['t'],
-            name = str(index)),
-            row = 1, col = 1
-        )
-    fig.update_layout( title_text=f"Comparison by {period}")
-    return fig
-
-def filter_for_date(df, start_date, end_date):
-    return df[df.index.to_series().between(start_date, end_date)]
-
-def plot_period_choose_date(df, start_date, end_date, period = 'week'):
-    df = filter_for_date(df, start_date, end_date)
-    #df = df.loc[start_date:end_date]
-    df = period_index(df, period = period)
-    fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
-    for index in df.index.levels[0]:
-        period_data = df.loc[index]
-        fig.add_trace(
-            go.Scatter(x = period_data['period_xaxis'],y=period_data['t'],
-            name = str(index)),
-            row = 1, col = 1
-        )
-    fig.update_layout( title_text=f"Comparison by {period}")
     return fig
