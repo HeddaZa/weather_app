@@ -44,7 +44,7 @@ app.layout = html.Div([
         initial_visible_month=dt.now().date(),  # the month initially presented when the user opens the calendar
         start_date=dt(2020, 12, 4).date(),
         end_date=dt.now().date(),
-        #display_format='MMM Do, YY',  # how selected dates are displayed in the DatePickerRange component.
+        display_format='D/M/YYYY',  # how selected dates are displayed in the DatePickerRange component.
         month_format='MMMM, YYYY',  # how calendar headers are displayed when the calendar is opened.
         #minimum_nights=2,  # minimum number of days between start and end date
 

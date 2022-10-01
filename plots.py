@@ -71,7 +71,7 @@ def subplots(reset, start_date = None, end_date = None):
         xaxis3_title = 'Date',
         yaxis1_title = 'Celsius',
         yaxis2_title = 'mm',
-        yaxis3_title = 'km/h',
+        yaxis3_title = 'm/s',
         xaxis_showticklabels=True, 
         xaxis2_showticklabels=True
         )
