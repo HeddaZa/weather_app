@@ -28,6 +28,7 @@ def get_station_dict():
 station_dictioniary = get_station_dict()
 
 app.layout = html.Div([
+    'Pick a date range: ',
     dcc.DatePickerRange(
         id='my-date-picker-range',  # ID to be used for callback
         #calendar_orientation='horizontal',  # vertical or horizontal
