@@ -6,4 +6,7 @@ I connected this GitHub repository to Heroku, so feel free to play around with f
 
 The date range is restricted to 2018 to now (for now) and might be changed in the future. I'm still working on the app, hence features might change, or new plots will appear, maybe a slightly nicer layout, etc. (And hopefully I will update the README accordingly)
 
-This app is written in python with dash/plotly.
+This app is written in **python** with **dash/plotly**.
+
+The file *station_ids.csv* contains a list with station IDs and station areas as well as the county in which the station is located.
+
