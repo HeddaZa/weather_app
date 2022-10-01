@@ -40,7 +40,7 @@ def subplots(reset, start_date = None, end_date = None):
     fig.add_trace(
         go.Scatter(x=reset.index, y=reset['nied'],
         name = 'rain',
-        hoverinfo= 'name',
+        #hoverinfo= 'name',
         legendgroup = '2',
         line = dict(color = 'rgb(0,100,255)'),
         fill='tozeroy'),
