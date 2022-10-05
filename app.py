@@ -66,10 +66,36 @@ app.layout = html.Div([
     html.Br(),
     html.Div(id='my-output'),
 
+    html.Button("Download CSV", id="btn_csv"),
+    dcc.Download(id="download-dataframe-csv"),
+
     html.H3("Elisabeth's Weather App", style={'textAlign': 'center'}),
-    dcc.Graph(id='mymap')
+    dcc.Graph(id='mymap'),
+
+    
+    
+    
 ])
 
+
+
+@app.callback(
+    Output("download-dataframe-csv", "data"),
+    [Input("btn_csv", "n_clicks"),
+    Input('my-date-picker-range', 'start_date'),
+     Input('my-date-picker-range', 'end_date'),
+     Input('my-input', 'value')
+    ],
+    prevent_initial_call=True,
+)
+def func(n_clicks,start_date, end_date, value):
+    if value not in station_dictioniary:
+        raise ValueError('station not in list')
+    else:
+        zamg = fa.Zamg_Data(start_date,end_date,station = value)
+        data = zamg.zamg_data()
+        name = station_dictioniary[value]
+        return dcc.send_data_frame(data.to_csv, f"weather_{name}.csv")
 
 @app.callback(
     Output('mymap', 'figure'),
