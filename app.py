@@ -28,6 +28,8 @@ def get_station_dict():
 station_dictioniary = get_station_dict()
 
 app.layout = html.Div([
+    html.H1("Elisabeth's Weather App", style={'textAlign': 'center'}),
+    html.Div([
     'Pick a date range: ',
     dcc.DatePickerRange(
         id='my-date-picker-range',  # ID to be used for callback
@@ -53,15 +55,16 @@ app.layout = html.Div([
         persisted_props=['start_date'],
         persistence_type='session',  # session, local, or memory. Default is 'local'
 
-        updatemode='bothdates'  # singledate or bothdates. Determines when callback is triggered
-    ),
+        updatemode='bothdates',  # singledate or bothdates. Determines when callback is triggered
+        style={'display': 'inline-block' }
+    )]),
     # html.Br(),
     #     html.Label('Text Input'),
     #     dcc.Input(value='5904', type='text'),
         
     html.Div([
         "station ID: ",
-        dcc.Input(id='my-input', value='5904', type='text',debounce=True)
+        dcc.Input(id='my-input', value='5904', type='text',debounce=True,style={'display': 'inline-block'})
     ]),
     html.Br(),
     html.Div(id='my-output'),
@@ -69,7 +72,7 @@ app.layout = html.Div([
     html.Button("Download CSV", id="btn_csv"),
     dcc.Download(id="download-dataframe-csv"),
 
-    html.H3("Elisabeth's Weather App", style={'textAlign': 'center'}),
+    #html.H3("Elisabeth's Weather App", style={'textAlign': 'center'}),
     dcc.Graph(id='mymap'),
 
     
