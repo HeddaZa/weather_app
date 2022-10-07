@@ -11,6 +11,7 @@ from datetime import datetime as dt
 import requests
 import json
 from dash.exceptions import PreventUpdate
+import dash
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -93,15 +94,20 @@ app.layout = html.Div([
     prevent_initial_call=True,
 )
 def func(n_clicks,start_date, end_date, value):
-    if n_clicks is None:
-        raise PreventUpdate
-    elif value not in station_dictioniary:
-        raise ValueError('station not in list')
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    #print(changed_id)
+
+    if 'btn_csv.n_clicks' in changed_id:
+        if value not in station_dictioniary:
+            raise ValueError('station not in list')
+        else:
+            zamg = fa.Zamg_Data(start_date,end_date,station = value)
+            data = zamg.zamg_data()
+            name = station_dictioniary[value]
+            return dcc.send_data_frame(data.to_csv, f"weather_{name}.csv")
     else:
-        zamg = fa.Zamg_Data(start_date,end_date,station = value)
-        data = zamg.zamg_data()
-        name = station_dictioniary[value]
-        return dcc.send_data_frame(data.to_csv, f"weather_{name}.csv")
+        raise PreventUpdate
+
 
 @app.callback(
     Output('mymap', 'figure'),
