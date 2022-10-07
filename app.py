@@ -10,6 +10,7 @@ import plots as pl
 from datetime import datetime as dt
 import requests
 import json
+from dash.exceptions import PreventUpdate
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -92,7 +93,9 @@ app.layout = html.Div([
     prevent_initial_call=True,
 )
 def func(n_clicks,start_date, end_date, value):
-    if value not in station_dictioniary:
+    if n_clicks is None:
+        raise PreventUpdate
+    elif value not in station_dictioniary:
         raise ValueError('station not in list')
     else:
         zamg = fa.Zamg_Data(start_date,end_date,station = value)
@@ -115,6 +118,7 @@ def update_output(start_date, end_date, value):
 
     fig = pl.subplots(data)
     return fig
+
 
 @app.callback(
     Output(component_id='my-output', component_property='children'),
