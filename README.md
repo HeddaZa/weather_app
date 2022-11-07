@@ -8,3 +8,4 @@ This app is written in **python** with **dash/plotly**.
 
 The file *station_ids.csv* contains a list with station IDs and station areas as well as the county in which the station is located.
 
+To create a docker container to run the app: **docker build -t weather_app .**
